@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model List<Advertisement>;
+
+<div class="text-center">
+    <p>Products in the Shop: @ViewBag.ProductsCount</p>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+        @foreach (var i in Model)
+        {
+            <partial name="_AdsCardPartial" model="@i" />
+        }
+    </div>
+</div>

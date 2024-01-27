@@ -1,0 +1,30 @@
+﻿@model Advertisement
+
+<div class="col">
+	<div class="card h-100">
+		<a asp-controller="Advertisements"
+			asp-action="Details"
+			asp-route-id="@Model.Id"
+			asp-route-returnUrl="@Context.Request.Path">
+			<img src="@Model.AdvertisePictures.FirstOrDefault(p => p.IsMainPicture == true)?.URL" class="card-img-top" alt="Image Url"/>
+		</a>
+        <div class="card-body">
+            <h5 class="card-title">
+                <a class="title-link"
+                   asp-controller="Advertisements"
+                   asp-action="Details"
+                   asp-route-id="@Model.Id"
+                   asp-route-returnUrl="@Context.Request.Path">
+                    @Model.Title
+                </a>
+            </h5>
+            <p class="card-text">
+                @Model.Price$<br />
+                @Model.Category?.Name
+            </p>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-primary">Add to Cart</button>
+        </div>
+	</div>
+</div>

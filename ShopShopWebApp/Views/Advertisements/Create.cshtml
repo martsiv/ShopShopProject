@@ -1,0 +1,90 @@
+﻿@model CreateAdsModel
+
+<h1 class="pb-4 pt-4 m-0 fw-bold">Create New Advertisement</h1>
+
+<form class="row g-3" method="post" enctype="multipart/form-data" asp-action="Create">
+	<div class="col-md-12 p-4 bg-white border border-white rounded-3">
+		<label asp-for=Title class="form-label">Title</label>
+		<input asp-for=Title type="text" class="form-control" placeholder="Enter title">
+	</div>
+	<div class="col-md-12 p-4 bg-white border border-white rounded-3">
+		<label asp-for=CategoryId class="form-label">Category</label>
+		<select asp-items="ViewBag.Categories" asp-for="CategoryId" class="form-select">
+			<option selected disabled>Choose...</option>
+		</select>
+	</div>
+	<div class="col-md-12 row g-3 p-4 bg-white border border-white rounded-3">
+		<label asp-for=Pictures class="form-label col-md-12">Pictures</label>
+		<div class="image-preview">
+			<img hidden src="" alt="Default Image">
+			<i class="bi bi-camera align-middle"></i>
+			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
+		</div>
+		<div class="image-preview">
+			<img hidden src="" alt="Default Image">
+			<i class="bi bi-camera align-middle"></i>
+			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
+		</div>
+		<div class="image-preview">
+			<img hidden src="" alt="Default Image">
+			<i class="bi bi-camera align-middle"></i>
+			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
+		</div>
+		<div class="image-preview">
+			<img hidden src="" alt="Default Image">
+			<i class="bi bi-camera align-middle"></i>
+			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
+		</div>
+		<div class="image-preview">
+			<img hidden src="" alt="Default Image">
+			<i class="bi bi-camera align-middle"></i>
+			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
+		</div>
+		<div class="image-preview">
+			<img hidden src="" alt="Default Image">
+			<i class="bi bi-camera align-middle"></i>
+			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
+		</div>
+		<div class="image-preview">
+			<img hidden src="" alt="Default Image">
+			<i class="bi bi-camera align-middle"></i>
+			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
+		</div>
+		<div class="image-preview">
+			<img hidden src="" alt="Default Image">
+			<i class="bi bi-camera align-middle"></i>
+			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
+		</div>
+	</div>
+
+	<div class="col-md-12  p-4 bg-white border border-white rounded-3">
+		<label asp-for=Price class="form-label">Price</label>
+		<input asp-for=Price type="number" class="form-control" placeholder="Enter product price">
+	</div>
+	<div class="col-12  p-4 bg-white border border-white rounded-3">
+		<label asp-for=City class="form-label">City</label>
+		<input asp-for=City type="text" class="form-control" placeholder="Enter city">
+	</div>
+	<div class="col-md-12  p-4 bg-white border border-white rounded-3">
+		<label asp-for=Description class="form-label">Description</label>
+		<textarea asp-for=Description class="form-control" rows="3" placeholder="Enter product description"></textarea>
+	</div>
+	<div class="col-12 d-flex justify-content-md-end" style="gap: 10px">
+			<a asp-action="Index" class="btn btn-dark w-25">Back</a>
+			<button type="submit" class="btn btn-success w-25" style="background-color: rgb(0,47,52); color: white">Create</button>
+	</div>
+</form>
+<script>
+	function previewImage(event) {
+		var input = event.target;
+		var reader = new FileReader();
+
+		reader.onload = function () {
+			var imgElement = input.previousElementSibling;
+			imgElement.src = reader.result;
+		};
+
+		reader.readAsDataURL(input.files[0]);
+	}
+
+</script>
