@@ -115,7 +115,11 @@ namespace ShopShopWebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var advertisement = await context.Advertisements.FindAsync(id);
+            var advertisement = await context.Advertisements.
+                                                       Include(x => x.Category).
+                                                       Include(x => x.AdvertisePictures).
+                                                       Include(x => x.AdvertisementStatus).
+                                                       FirstOrDefaultAsync(x => x.Id == id);
             if (advertisement == null) return NotFound();
 
             LoadCategories();
