@@ -1,4 +1,6 @@
 using data_access.data;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace ShopShopWebApp
@@ -19,7 +21,14 @@ namespace ShopShopWebApp
             // auto mapper
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            var app = builder.Build();
+			builder.Services.AddFluentValidationAutoValidation();
+			// enable client-side validation
+			builder.Services.AddFluentValidationClientsideAdapters();
+			// Load an assembly reference rather than using a marker type.
+			builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+
+
+			var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

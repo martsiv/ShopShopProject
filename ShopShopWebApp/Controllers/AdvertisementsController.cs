@@ -66,7 +66,12 @@ namespace ShopShopWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateAdsModel model)
         {
-            
+            if (!ModelState.IsValid)
+            {
+                LoadCategories();
+                return View(model);
+            }
+
             var title = model.Title;
             var price = model.Price;
             var description = model.Description;
@@ -128,7 +133,6 @@ namespace ShopShopWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Advertisement model)
         {
-            // model validation
             if (!ModelState.IsValid)
             {
                 LoadCategories();
