@@ -1,4 +1,4 @@
-﻿@model Advertisement
+﻿@model AdvertisementDTO
 
 
 <h1>@Model.Title</h1>
@@ -14,7 +14,7 @@
     <h5 class="card-header">Ads Information</h5>
     <div class="card-body">
         <h5 class="card-title fs-1">@Model.Title</h5>
-        <p class="card-text fs-4">@Model.Price$ - @Model.Category?.Name</p>
+        <p class="card-text fs-4">@Model.Price$ - @Model.CategoryName</p>
         <div>
             <a href="#" class="btn btn-primary my-3">Add to Cart</a>
             <a href="#" class="btn btn-success my-3">Buy Now</a>

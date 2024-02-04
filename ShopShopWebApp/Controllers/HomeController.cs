@@ -1,33 +1,27 @@
-using data_access.data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShopShopWebApp.Models;
 using System.Diagnostics;
+using Business_logic.DTOs;
+using Business_logic.Interfaces;
 
 namespace ShopShopWebApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationContext context;
+		private readonly IAdvertisementsService adsService;
 
-        public HomeController(ApplicationContext context, ILogger<HomeController> logger)
+		public HomeController(IAdvertisementsService adsService, ILogger<HomeController> logger)
         {
-            this.context = context;
+            this.adsService = adsService;
             _logger = logger;
         }
 
         public async Task<IActionResult> Index()
         {
-            ViewBag.ProductsCount = context.Advertisements.Count();
-
-            var products = await context.Advertisements.
-                                                        Include(x => x.Category).
-                                                        Include(x => x.AdvertisePictures).
-                                                        Include(x => x.AdvertisementStatus).
-                                                        ToListAsync();
-
-            return View(products);
+            ViewBag.AdvertisementsCount = adsService.GetCountAds();
+            return View(adsService.GetAllAds());
         }
 
         public async Task<IActionResult> Privacy()

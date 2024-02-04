@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using ShopShopWebApp.Models;
+using Business_logic.DTOs;
 
-namespace ShopShopWebApp.Validators
+namespace Business_logic.Validators
 {
-    public class CreateAdsModelValidator : AbstractValidator<CreateAdsModel>
+    public class CreateAdsModelValidator : AbstractValidator<CreateAdsDTO>
 	{
 		public CreateAdsModelValidator()
 		{
@@ -20,6 +20,9 @@ namespace ShopShopWebApp.Validators
 				.Matches(@"[A-Z].*").WithMessage("{PropertyName} must starts with uppercase letter.");
 
 			RuleFor(x => x.CategoryId)
+				.NotEmpty();
+			RuleFor(x => x.Pictures)
+				.NotNull()
 				.NotEmpty();
 		}
 	}

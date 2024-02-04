@@ -12,8 +12,8 @@ using data_access.data;
 namespace data_access.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240126122340_AddedFakeDataForTest")]
-    partial class AddedFakeDataForTest
+    [Migration("20240204205023_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,9 +68,6 @@ namespace data_access.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DeliveryContactInfoId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -89,8 +86,6 @@ namespace data_access.Migrations
                     b.HasIndex("AdvertisementStatusId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("DeliveryContactInfoId");
 
                     b.HasIndex("UserId");
 
@@ -364,6 +359,12 @@ namespace data_access.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AdvertisementId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CheckoutDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -382,6 +383,9 @@ namespace data_access.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AdvertisementId")
+                        .IsUnique();
 
                     b.HasIndex("DeliveryCompanyId");
 
@@ -507,10 +511,6 @@ namespace data_access.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("data_access.Entities.DeliveryContactInfo", "DeliveryContactInfo")
-                        .WithMany("Advertisements")
-                        .HasForeignKey("DeliveryContactInfoId");
-
                     b.HasOne("data_access.Entities.User", "User")
                         .WithMany("Advertisements")
                         .HasForeignKey("UserId")
@@ -520,8 +520,6 @@ namespace data_access.Migrations
                     b.Navigation("AdvertisementStatus");
 
                     b.Navigation("Category");
-
-                    b.Navigation("DeliveryContactInfo");
 
                     b.Navigation("User");
                 });
@@ -537,6 +535,12 @@ namespace data_access.Migrations
 
             modelBuilder.Entity("data_access.Entities.DeliveryContactInfo", b =>
                 {
+                    b.HasOne("data_access.Entities.Advertisement", "Advertisement")
+                        .WithOne("DeliveryContactInfo")
+                        .HasForeignKey("data_access.Entities.DeliveryContactInfo", "AdvertisementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("data_access.Entities.DeliveryCompany", "DeliveryCompany")
                         .WithMany("DeliveryContactInfos")
                         .HasForeignKey("DeliveryCompanyId")
@@ -547,6 +551,8 @@ namespace data_access.Migrations
                         .WithMany("DeliveryContactInfos")
                         .HasForeignKey("DeliveryHomeAdrdessId");
 
+                    b.Navigation("Advertisement");
+
                     b.Navigation("DeliveryCompany");
 
                     b.Navigation("DeliveryHomeAdrdess");
@@ -555,6 +561,8 @@ namespace data_access.Migrations
             modelBuilder.Entity("data_access.Entities.Advertisement", b =>
                 {
                     b.Navigation("AdvertisePictures");
+
+                    b.Navigation("DeliveryContactInfo");
                 });
 
             modelBuilder.Entity("data_access.Entities.AdvertisementStatus", b =>
@@ -572,11 +580,6 @@ namespace data_access.Migrations
             modelBuilder.Entity("data_access.Entities.DeliveryCompany", b =>
                 {
                     b.Navigation("DeliveryContactInfos");
-                });
-
-            modelBuilder.Entity("data_access.Entities.DeliveryContactInfo", b =>
-                {
-                    b.Navigation("Advertisements");
                 });
 
             modelBuilder.Entity("data_access.Entities.DeliveryHomeAdrdess", b =>

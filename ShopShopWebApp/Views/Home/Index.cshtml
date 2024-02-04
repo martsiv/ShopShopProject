@@ -1,10 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model List<Advertisement>;
+@model List<AdvertisementDTO>;
 
 <div class="text-center">
-    <p>Products in the Shop: @ViewBag.ProductsCount</p>
+    <p>Products in the Shop: @ViewBag.AdvertisementsCount</p>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
         @foreach (var i in Model)

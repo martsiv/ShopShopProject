@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -7,7 +8,7 @@
 namespace data_access.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedFakeDataForTest : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -91,34 +92,6 @@ namespace data_access.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DeliveryContactInfos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DeliveryCompanyId = table.Column<int>(type: "int", nullable: false),
-                    DeliveryHomeAddressId = table.Column<int>(type: "int", nullable: true),
-                    DeliveryHomeAdrdessId = table.Column<int>(type: "int", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PostOffice = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DeliveryContactInfos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DeliveryContactInfos_DeliveryCompanies_DeliveryCompanyId",
-                        column: x => x.DeliveryCompanyId,
-                        principalTable: "DeliveryCompanies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DeliveryContactInfos_DeliveryHomeAdrdesses_DeliveryHomeAdrdessId",
-                        column: x => x.DeliveryHomeAdrdessId,
-                        principalTable: "DeliveryHomeAdrdesses",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Advertisements",
                 columns: table => new
                 {
@@ -129,7 +102,6 @@ namespace data_access.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
-                    DeliveryContactInfoId = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     AdvertisementStatusId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -148,11 +120,6 @@ namespace data_access.Migrations
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Advertisements_DeliveryContactInfos_DeliveryContactInfoId",
-                        column: x => x.DeliveryContactInfoId,
-                        principalTable: "DeliveryContactInfos",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Advertisements_Users_UserId",
                         column: x => x.UserId,
@@ -180,6 +147,42 @@ namespace data_access.Migrations
                         principalTable: "Advertisements",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeliveryContactInfos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DeliveryCompanyId = table.Column<int>(type: "int", nullable: false),
+                    DeliveryHomeAddressId = table.Column<int>(type: "int", nullable: true),
+                    DeliveryHomeAdrdessId = table.Column<int>(type: "int", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostOffice = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CheckoutDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AdvertisementId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeliveryContactInfos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DeliveryContactInfos_Advertisements_AdvertisementId",
+                        column: x => x.AdvertisementId,
+                        principalTable: "Advertisements",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DeliveryContactInfos_DeliveryCompanies_DeliveryCompanyId",
+                        column: x => x.DeliveryCompanyId,
+                        principalTable: "DeliveryCompanies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DeliveryContactInfos_DeliveryHomeAdrdesses_DeliveryHomeAdrdessId",
+                        column: x => x.DeliveryHomeAdrdessId,
+                        principalTable: "DeliveryHomeAdrdesses",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
@@ -257,8 +260,8 @@ namespace data_access.Migrations
 
             migrationBuilder.InsertData(
                 table: "Advertisements",
-                columns: new[] { "Id", "AdvertisementStatusId", "CategoryId", "City", "DeliveryContactInfoId", "Description", "Price", "Title", "UserId" },
-                values: new object[] { 1, 2, 12, "Kyiv", null, "New phone with waranty", 67399m, "iPhone 13 Pro Max 512Gb", 1 });
+                columns: new[] { "Id", "AdvertisementStatusId", "CategoryId", "City", "Description", "Price", "Title", "UserId" },
+                values: new object[] { 1, 2, 12, "Kyiv", "New phone with waranty", 67399m, "iPhone 13 Pro Max 512Gb", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Advertisements_AdvertisementStatusId",
@@ -269,11 +272,6 @@ namespace data_access.Migrations
                 name: "IX_Advertisements_CategoryId",
                 table: "Advertisements",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Advertisements_DeliveryContactInfoId",
-                table: "Advertisements",
-                column: "DeliveryContactInfoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Advertisements_UserId",
@@ -289,6 +287,12 @@ namespace data_access.Migrations
                 name: "IX_Categories_ParentCategoryId",
                 table: "Categories",
                 column: "ParentCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeliveryContactInfos_AdvertisementId",
+                table: "DeliveryContactInfos",
+                column: "AdvertisementId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_DeliveryContactInfos_DeliveryCompanyId",
@@ -308,7 +312,16 @@ namespace data_access.Migrations
                 name: "AdvertisePictures");
 
             migrationBuilder.DropTable(
+                name: "DeliveryContactInfos");
+
+            migrationBuilder.DropTable(
                 name: "Advertisements");
+
+            migrationBuilder.DropTable(
+                name: "DeliveryCompanies");
+
+            migrationBuilder.DropTable(
+                name: "DeliveryHomeAdrdesses");
 
             migrationBuilder.DropTable(
                 name: "AdvertisementStatuses");
@@ -317,16 +330,7 @@ namespace data_access.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "DeliveryContactInfos");
-
-            migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "DeliveryCompanies");
-
-            migrationBuilder.DropTable(
-                name: "DeliveryHomeAdrdesses");
         }
     }
 }

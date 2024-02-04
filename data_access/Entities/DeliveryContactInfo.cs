@@ -15,6 +15,8 @@ namespace data_access.Entities
         public DeliveryHomeAdrdess? DeliveryHomeAdrdess { get; set; }
         public string City { get; set; }
         public string PostOffice { get; set; }
-        public ICollection<Advertisement> Advertisements { get; set; } = new HashSet<Advertisement>();
+        public DateTime CheckoutDate { get; set; }
+        public int AdvertisementId { get; set; }
+        public Advertisement? Advertisement { get; set; }
     }
 }

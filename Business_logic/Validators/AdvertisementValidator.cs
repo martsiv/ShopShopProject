@@ -1,7 +1,7 @@
 ﻿using data_access.Entities;
 using FluentValidation;
 
-namespace ShopShopWebApp.Validators
+namespace Business_logic.Validators
 {
     public class AdvertisementValidator : AbstractValidator<Advertisement>
 	{
@@ -20,6 +20,12 @@ namespace ShopShopWebApp.Validators
 				.Matches(@"[A-Z].*").WithMessage("{PropertyName} must starts with uppercase letter.");
 
 			RuleFor(x => x.CategoryId)
+				.NotEmpty();
+			RuleFor(x => x.AdvertisementStatusId)
+				.NotEmpty();
+			RuleFor(x => x.DeliveryContactInfo)
+				.NotEmpty();
+			RuleFor(x => x.UserId)
 				.NotEmpty();
 		}
 	}

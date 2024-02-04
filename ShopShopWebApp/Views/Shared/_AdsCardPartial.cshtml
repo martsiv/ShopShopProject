@@ -1,4 +1,4 @@
-﻿@model Advertisement
+﻿@model AdvertisementDTO
 
 <div class="col">
 	<div class="card h-100">
@@ -20,7 +20,7 @@
             </h5>
             <p class="card-text">
                 @Model.Price$<br />
-                @Model.Category?.Name
+                @Model.CategoryName
             </p>
         </div>
         <div class="card-footer">

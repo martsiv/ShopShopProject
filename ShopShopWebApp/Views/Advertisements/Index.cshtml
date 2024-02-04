@@ -1,6 +1,6 @@
-﻿@model List<Advertisement>;
+﻿@model List<AdvertisementDTO>;
 
-<h1>Products List</h1>
+<h1>Advertisements List</h1>
 <p>You can manage the available products here.</p>
 
 <table class="table table-striped">
@@ -22,10 +22,10 @@
                 <th scope="row">@i.Id</th>
                 <td>@i.Title</td>
                 <td>@i.Price$</td>
-                <td>@i.Category?.Name</td>
+                <td>@i.CategoryName</td>
                 <td>@i.City</td>
-                <td>@i.AdvertisementStatus?.Name</td>
-                <td>@i.User?.FirstName @i.User?.LastName</td>
+                <td>@i.AdvertisementStatusName</td>
+                <td>@i.UserName</td>
                 <td>
                     <a asp-controller="Advertisements" asp-action="Delete" asp-route-id="@i.Id">Delete</a>
                 </td>

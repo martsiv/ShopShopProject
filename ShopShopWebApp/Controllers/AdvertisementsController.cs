@@ -1,150 +1,84 @@
 ﻿using AutoMapper;
-using data_access.data;
-using data_access.Entities;
+using Business_logic.DTOs;
+using Business_logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ShopShopWebApp.Models;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ShopShopWebApp.Controllers
 {
     public class AdvertisementsController : Controller
     {
-        private readonly ApplicationContext context;
+		private readonly IAdvertisementsService adsService;
         private readonly IMapper mapper;
 
-        public AdvertisementsController(ApplicationContext context, IMapper mapper)
+        public AdvertisementsController(IAdvertisementsService adsService, IMapper mapper)
         {
-            this.context = context;
+            this.adsService = adsService;
             this.mapper = mapper;
         }
-        private void LoadCategories()
+        private async Task LoadCategories()
         {
-            ViewBag.Categories = new SelectList(context.Categories.ToList(), nameof(Category.Id), nameof(Category.Name));
-        }
+			var categoris = await adsService.GetAllCategories();
+			ViewBag.Categories = new SelectList(categoris, nameof(CategoryDTO.Id), nameof(CategoryDTO.Name));
+		}
         public async Task<IActionResult> Index()
         {
-            var products = await context.Advertisements.
-                                                        Include(x => x.Category).
-                                                        Include(x => x.AdvertisePictures).
-                                                        Include(x => x.AdvertisementStatus).
-                                                        ToListAsync();
-
-            return View(products);
+            return View(adsService.GetAllAds());
         }
         [HttpPost]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null) return BadRequest();
-
-            Advertisement? advertisement = await context.Advertisements.FirstOrDefaultAsync(adv => adv.Id == id);
-            if (advertisement == null) return NotFound();
-            context.Advertisements.Remove(advertisement);
-            await context.SaveChangesAsync();
+            await adsService.DeleteAds(id);
             return RedirectToAction("Index");
         }
         [HttpGet]
         public async Task<IActionResult> Details(int id, string? returnUrl)
         {
-            Advertisement? advertisement = await context.Advertisements.
-                                                        Include(x => x.Category).
-                                                        Include(x => x.AdvertisePictures).
-                                                        FirstOrDefaultAsync(x => x.Id == id);
+            AdvertisementDTO? advertisement = await adsService.GetAds(id);
             if (advertisement == null)
                 return NotFound();
 
             ViewBag.ReturnUrl = returnUrl;
+
             return View(advertisement);
         }
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            LoadCategories();
+            await LoadCategories();
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateAdsModel model)
+        public async Task<IActionResult> Create(CreateAdsDTO model)
         {
             if (!ModelState.IsValid)
             {
-                LoadCategories();
+                await LoadCategories();
                 return View(model);
             }
-
-            var title = model.Title;
-            var price = model.Price;
-            var description = model.Description;
-            var city = model.City;
-            var categoryId = model.CategoryId;
-
-            Advertisement ads = new()
-            {
-                UserId = 1,
-                AdvertisementStatusId = 2,
-                Title = title,
-                Price = price,
-                Description = description,
-                City = city,
-                CategoryId = categoryId,
-            };
-            await context.Advertisements.AddAsync(ads);
-
-            if (model.Pictures != null && model.Pictures.Count > 0)
-            {
-                foreach (var picture in model.Pictures.Select((value, i) => new {i, value}))
-                {
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(picture.value.FileName);
-
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
-                    //Check directory
-                    var directoryPath = Path.GetDirectoryName(filePath);
-                    if (!Directory.Exists(directoryPath))
-                    {
-                        Directory.CreateDirectory(directoryPath);
-                    }
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await picture.value.CopyToAsync(stream);
-                    }
-                    if (picture.i == 0)
-                        await context.AdvertisePictures.AddAsync(new() { IsMainPicture = true, URL = $"/images/{fileName}", Advertisement = ads });
-                    else await context.AdvertisePictures.AddAsync(new() { IsMainPicture = false, URL = $"/images/{fileName}", Advertisement = ads });
-                }
-            }
-            await context.SaveChangesAsync();
-
+            await adsService.CreateAds(model);
             return RedirectToAction("Index");
         }
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var advertisement = await context.Advertisements.
-                                                       Include(x => x.Category).
-                                                       Include(x => x.AdvertisePictures).
-                                                       Include(x => x.AdvertisementStatus).
-                                                       FirstOrDefaultAsync(x => x.Id == id);
+            var advertisement = await adsService.GetAds(id);
             if (advertisement == null) return NotFound();
 
-            LoadCategories();
+            await LoadCategories();
             return View(advertisement);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(Advertisement model)
+        public async Task<IActionResult> Edit(EditAdsDTO model)
         {
             if (!ModelState.IsValid)
             {
-                LoadCategories();
+                await LoadCategories();
                 return View(model);
             }
 
-            // update product in the db
-            context.Advertisements.Update(model);
-            await context.SaveChangesAsync();
-
+            await adsService.EditAds(model);
             return RedirectToAction("Index");
         }
-
     }
 }

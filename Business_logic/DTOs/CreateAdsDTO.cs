@@ -1,8 +1,9 @@
 ﻿using data_access.Entities;
+using Microsoft.AspNetCore.Http;
 
-namespace ShopShopWebApp.Models
+namespace Business_logic.DTOs
 {
-    public class CreateAdsModel
+    public class CreateAdsDTO
     {
         public int Id { get; set; }
         public string Title { get; set; }
