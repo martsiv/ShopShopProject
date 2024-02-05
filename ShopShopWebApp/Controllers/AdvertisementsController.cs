@@ -23,7 +23,7 @@ namespace ShopShopWebApp.Controllers
 		}
         public async Task<IActionResult> Index()
         {
-            return View(adsService.GetAllAds());
+            return View(await adsService.GetAllAds());
         }
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
@@ -66,7 +66,7 @@ namespace ShopShopWebApp.Controllers
             if (advertisement == null) return NotFound();
 
             await LoadCategories();
-            return View(advertisement);
+            return View(mapper.Map<EditAdsDTO>(advertisement));
         }
         [HttpPost]
         public async Task<IActionResult> Edit(EditAdsDTO model)

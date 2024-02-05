@@ -20,8 +20,8 @@ namespace ShopShopWebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            ViewBag.AdvertisementsCount = adsService.GetCountAds();
-            return View(adsService.GetAllAds());
+            ViewBag.AdvertisementsCount = await adsService.GetCountAds();
+            return View(await adsService.GetAllAds());
         }
 
         public async Task<IActionResult> Privacy()

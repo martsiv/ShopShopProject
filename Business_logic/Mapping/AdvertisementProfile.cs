@@ -11,6 +11,8 @@ namespace Business_logic.Mapping
             CreateMap<Advertisement, AdvertisementDTO>();
             CreateMap<Advertisement, EditAdsDTO>();
 
+            CreateMap<AdvertisementDTO, EditAdsDTO>().ReverseMap();
+
             CreateMap<Category, CategoryDTO>().ReverseMap();
 
             CreateMap<DeliveryContactInfo, DeliveryDTO>();

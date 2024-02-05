@@ -187,11 +187,11 @@ namespace Business_logic.Services
 			var adsList = await context.Advertisements
 							.Include(x => x.Category)
 							.Include(x => x.AdvertisePictures)
-							.Include(x => x.User)
-							.Include(x => x.AdvertisementStatus)
-							.ToListAsync();
-			// TO DO: Create manual mapping or change automapping
-		}
+                            .Include(x => x.User)
+                            .Include(x => x.AdvertisementStatus)
+                            .ToListAsync();
+			return mapper.Map<List<AdvertisementDTO>>(adsList);
+        }
 
         public async Task<IEnumerable<CategoryDTO>> GetAllCategories()
         {
