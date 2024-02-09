@@ -22,7 +22,7 @@ namespace Business_logic.DTOs
         public int AdvertisementStatusId { get; set; }
         public string? AdvertisementStatusName { get; set; }
         public ICollection<AdvertisePictureDTO> AdvertisePictures { get; set; } = new HashSet<AdvertisePictureDTO>();
-        public ICollection<AdvertisePicture> DeletedAdvertisePictures { get; set; } = new HashSet<AdvertisePicture>();
+        public ICollection<string> DeletedAdvertisePicturesUrls { get; set; } = new List<string>();
         public List<IFormFile> NewAdvertisePictures { get; set; } = new List<IFormFile>();
     }
 }

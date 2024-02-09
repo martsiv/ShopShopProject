@@ -80,5 +80,15 @@ namespace ShopShopWebApp.Controllers
             await adsService.EditAds(model);
             return RedirectToAction("Index");
         }
-    }
+		[HttpGet]
+		public async Task<IActionResult> GetAdvertisement(int id)
+		{
+			var advertisement = await adsService.GetAds(id);
+			if (advertisement == null) return NotFound();
+
+			await LoadCategories();
+			return Ok(mapper.Map<EditAdsDTO>(advertisement));
+		}
+
+	}
 }

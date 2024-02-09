@@ -2,7 +2,7 @@
 
 <h1 class="pb-4 pt-4 m-0 fw-bold">Edit Advertisement</h1>
 
-<form class="row g-3" method="post" enctype="multipart/form-data" asp-action="Create">
+<form class="row g-3" method="post" enctype="multipart/form-data" name="edit" asp-action="Edit">
 	<div class="col-md-12 p-4 bg-white border border-white rounded-3">
 		<label asp-for=Title class="form-label">Title</label>
 		<input asp-for=Title type="text" class="form-control" placeholder="Enter title">
@@ -14,47 +14,29 @@
 			<option selected disabled>Choose...</option>
 		</select>
 	</div>
-	<div class="col-md-12 row g-3 p-4 bg-white border border-white rounded-3">
+	<div class="col-md-12 p-3 bg-white border border-white rounded-3">
 		<label asp-for=AdvertisePictures class="form-label col-md-12">Pictures</label>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=AdvertisePictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
-		</div>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=AdvertisePictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
-		</div>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=AdvertisePictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
-		</div>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=AdvertisePictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
-		</div>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=AdvertisePictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
-		</div>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=AdvertisePictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
-		</div>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=AdvertisePictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
-		</div>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=AdvertisePictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
+		<div class="row row-cols-md-4 g-1">
+			@for (var i = 0; i < 8; i++)
+			{
+				string? imagePath = Model.AdvertisePictures.ElementAtOrDefault(i)?.URL;
+				<div class="col">
+					<div class="card position-relative h-100">
+						@if (imagePath != null)
+						{
+							<img src="@imagePath" class="card-img-top" alt="Ads Picture"/>
+							<button class="btn btn-secondary btn-show position-absolute" name="deleteImgBtn" style="display: none; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+								<i class="bi bi-trash3"></i>
+							</button>
+
+						}
+						else
+						{
+							<i class="bi bi-camera align-middle h-100"></i>
+						}
+					</div>
+				</div>
+			}
 		</div>
 	</div>
 
@@ -76,11 +58,11 @@
 	<div class="col-12 d-flex justify-content-md-end" style="gap: 10px">
 		<a asp-action="Index" class="btn btn-dark w-25">Back</a>
 		@* Button was disabled because need to fix editing pictures with JS (for next feateres) *@
-		<button disabled type="submit" class="btn btn-success w-25" style="background-color: rgb(0,47,52); color: white">Save</button>
+		<button type="submit" name="submit" class="btn btn-success w-25" style="background-color: rgb(0,47,52); color: white">Save</button>
 	</div>
 </form>
 @section Scripts {
-	@{
-		<partial name="_ValidationScriptsPartial.cshtml" />
-	}
+
+	<partial name="_ValidationScriptsPartial.cshtml" />
+	<partial name="~/Views/Advertisements/_AdsEditScriptPartial.cshtml" />
 }

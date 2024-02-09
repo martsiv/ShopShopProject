@@ -54,7 +54,7 @@ namespace Business_logic.Services
 					{
 						await picture.value.CopyToAsync(stream);
 					}
-					if (picture.i == 0)
+					if (picture.i == 0) // if index == 0
 						await context.AdvertisePictures.AddAsync(new() { IsMainPicture = true, URL = $"/images/{fileName}", Advertisement = ads });
 					else await context.AdvertisePictures.AddAsync(new() { IsMainPicture = false, URL = $"/images/{fileName}", Advertisement = ads });
 				}
@@ -84,35 +84,42 @@ namespace Business_logic.Services
 			ads.AdvertisementStatusId = model.AdvertisementStatusId;
 
 			// Delete previous pictures
-			foreach (var adsPicture in model.DeletedAdvertisePictures)
+			foreach (var adsPicture in model.DeletedAdvertisePicturesUrls)
 			{
-				var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", adsPicture.URL);
+				if (adsPicture == null) continue;
+
+				// Отримання фізичного шляху до каталогу wwwroot
+				string rootPath = Directory.GetCurrentDirectory(); // Поточний каталог
+
+				// Повний шлях до файлу
+				string fullPath = Path.Combine(rootPath, "wwwroot", adsPicture.TrimStart('/'));
+
 				//Check directory
-				var directoryPath = Path.GetDirectoryName(filePath);
+				var directoryPath = Path.GetDirectoryName(fullPath);
 				if (!Directory.Exists(directoryPath))
 					break;
 				//Delete picture from storage
 				try
 				{
 					// Check if file exist
-					if (File.Exists(filePath))
+					if (File.Exists(fullPath))
 					{
 						// Delete file
-						File.Delete(filePath);
+						File.Delete(fullPath);
 					}
 				}
 				catch (Exception ex)
 				{
 					Console.WriteLine($"An error occurred when trying to delete a file: {ex.Message}"); // TO DO Throw exeption outside
 				}
-
+				
 				//Delete drom DB
-				var pictureEntity = context.AdvertisePictures.Find(adsPicture.Id);
+				var pictureEntity = await context.AdvertisePictures.FirstOrDefaultAsync(x => x.URL == adsPicture);
 				if (pictureEntity == null) return; // TODO: throw exceptions
 				context.AdvertisePictures.Remove(pictureEntity);
 			}
 			// Add new pictures
-			if (model.AdvertisePictures != null && model.AdvertisePictures.Count > 0)
+			if (model.NewAdvertisePictures != null && model.NewAdvertisePictures.Count > 0)
 			{
 				foreach (var picture in model.NewAdvertisePictures.Select((value, i) => new { i, value }))
 				{
@@ -130,7 +137,8 @@ namespace Business_logic.Services
 					{
 						await picture.value.CopyToAsync(stream);
 					}
-					if (picture.i == 0)
+					// !!!! need attention, TODO create choosing main pocture
+					if (picture.i == 0) 
 						await context.AdvertisePictures.AddAsync(new() { IsMainPicture = true, URL = $"/images/{fileName}", Advertisement = ads });
 					else await context.AdvertisePictures.AddAsync(new() { IsMainPicture = false, URL = $"/images/{fileName}", Advertisement = ads });
 				}
