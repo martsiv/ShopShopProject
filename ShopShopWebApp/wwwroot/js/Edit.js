@@ -27,6 +27,7 @@ function createDeleteImgBtn() {
     button.classList.add('btn', 'btn-secondary', 'btn-show', 'position-absolute');
     // Вказуємо ім'я кнопки
     button.name = 'deleteImgBtn';
+    button.type = "button";
     // Встановлюємо стилі для кнопки
     button.style.display = 'none';
     button.style.top = '50%';
@@ -92,11 +93,6 @@ myForm.addEventListener('submit', function (event) {
         formData.append('deletedAdvertisePicturesUrls', url);
     })
     else formData.delete('deletedAdvertisePicturesUrls')
-    console.log(urlPhotosForDelete);
-    // Вивести на консоль елементи FormData
-    for (let pair of formData.entries()) {
-        console.log(pair[0] + ', ' + pair[1]);
-    }
 
     fetch(currentUrl, {
         method: 'POST',
@@ -113,7 +109,7 @@ myForm.addEventListener('submit', function (event) {
 });
 
 // Спрацьовує лише якщо в середині елемент <i>
-$imageDiv.on('click', function () {
+$imageDiv.on('click', function (event) {
     let $element = $($(this).children().first());
     let $thisCard = $(this);
     let tagName = $element.prop('tagName');
@@ -173,8 +169,8 @@ function resubscribeCardsOnEvent($cardElement) {
     $cardElement.children('button[name="deleteImgBtn"]').on('click', deleteImage);
 };
 
-function deleteImage() {
-    console.log(urlPhotosForDelete);
+function deleteImage(event) {
+    event.stopPropagation(); // Зупинити подальше поширення події
 
     let $cardElement =  $($(this).closest('.card'));
     // Отримати URL фотографії з батьківського елемента кнопки видалення
@@ -201,4 +197,4 @@ function deleteImage() {
     var newCard = createEmptyPictureElement();
     $cardElement.append(newCard);
 }
-$('[name="deleteImgBtn"]').on('click', deleteImage);
+$('button[name="deleteImgBtn"]').on('click', deleteImage);
