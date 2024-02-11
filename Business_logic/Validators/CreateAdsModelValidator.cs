@@ -23,7 +23,8 @@ namespace Business_logic.Validators
 				.NotEmpty();
 			RuleFor(x => x.Pictures)
 				.NotNull()
-				.NotEmpty();
+				.NotEmpty()
+				.WithMessage("For {PropertyName}: must be minimun 1 picture.");
 		}
 	}
 }

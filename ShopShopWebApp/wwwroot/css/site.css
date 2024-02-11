@@ -58,6 +58,27 @@ input.valid {
     border: 1px solid #16a085;
 }
 
-/*.validation-summary-errors {
-    color: #b94a48;
-}*/
+#image-label {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    background: #fff;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 1px 7px rgba(105, 110, 232, 0.54);
+    border-radius: 10px;
+    flex-direction: column;
+    gap: 15px;
+    user-select: none;
+    cursor: pointer;
+    color: #207ed1;
+    transition: all 1s;
+}
+
+    #image-label:hover {
+        color: #18ac1c;
+    }

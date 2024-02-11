@@ -25,7 +25,7 @@ namespace ShopShopWebApp.Controllers
         {
             return View(await adsService.GetAllAds());
         }
-        [HttpPost]
+       
         public async Task<IActionResult> Delete(int id)
         {
             await adsService.DeleteAds(id);

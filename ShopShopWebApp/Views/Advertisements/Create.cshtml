@@ -14,48 +14,84 @@
 			<option selected disabled>Choose...</option>
 		</select>
 	</div>
-	<div class="col-md-12 row g-3 p-4 bg-white border border-white rounded-3">
+	<div class="col-md-12 p-4 bg-white border border-white rounded-3">
 		<label asp-for=Pictures class="form-label col-md-12">Pictures</label>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
+		<div class="row row-cols-md-4 g-1">
+
+			<div class="col">
+
+				<img hidden src="" alt="Default Image">
+				<input asp-for=Pictures style="display : none" type="file" class="image-upload" accept="image/*">
+				<label for="image-file" id="image-label">
+					<i class="bi bi-camera align-middle"></i>
+				</label>
+			</div>
+
+			<div class="col">
+
+				<img hidden src="" alt="Default Image">
+				<input asp-for=Pictures style="display : none" type="file" class="image-upload" accept="image/*">
+				<label asp-for=Pictures id="image-label">
+					<i class="bi bi-camera align-middle"></i>
+				</label>
+			</div>
+
+			<div class="col">
+
+				<img hidden src="" alt="Default Image">
+				<input asp-for=Pictures style="display : none" type="file" class="image-upload" accept="image/*">
+				<label asp-for=Pictures id="image-label">
+					<i class="bi bi-camera align-middle"></i>
+				</label>
+			</div>
+
+			<div class="col">
+
+				<img hidden src="" alt="Default Image">
+				<input asp-for=Pictures style="display : none" type="file" class="image-upload" accept="image/*">
+				<label asp-for=Pictures id="image-label">
+					<i class="bi bi-camera align-middle"></i>
+				</label>
+			</div>
+
+			<div class="col">
+
+				<img hidden src="" alt="Default Image">
+				<input asp-for=Pictures style="display : none" type="file" class="image-upload" accept="image/*">
+				<label asp-for=Pictures id="image-label">
+					<i class="bi bi-camera align-middle"></i>
+				</label>
+			</div>
+
+			<div class="col">
+
+				<img hidden src="" alt="Default Image">
+				<input asp-for=Pictures style="display : none" type="file" class="image-upload" accept="image/*">
+				<label asp-for=Pictures id="image-label">
+					<i class="bi bi-camera align-middle"></i>
+				</label>
+			</div>
+
+			<div class="col">
+
+				<img hidden src="" alt="Default Image">
+				<input asp-for=Pictures style="display : none" type="file" class="image-upload" accept="image/*">
+				<label asp-for=Pictures id="image-label">
+					<i class="bi bi-camera align-middle"></i>
+				</label>
+			</div>
+
+			<div class="col">
+
+					<img hidden src="" alt="Default Image">
+					<input asp-for=Pictures style="display : none" type="file" class="image-upload" accept="image/*">
+					<label asp-for=Pictures id="image-label">
+						<i class="bi bi-camera align-middle"></i>
+					</label>
+			</div>
 		</div>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
-		</div>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
-		</div>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
-		</div>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
-		</div>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
-		</div>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
-		</div>
-		<div class="image-preview">
-			<img hidden src="" alt="Default Image">
-			<i class="bi bi-camera align-middle"></i>
-			<input asp-for=Pictures type="file" class="image-upload" accept="image/*" onchange="previewImage(event)">
-		</div>
+		<span asp-validation-for=Pictures></span>
+
 	</div>
 
 	<div class="col-md-12  p-4 bg-white border border-white rounded-3">
@@ -74,11 +110,11 @@
 		<span asp-validation-for=Description></span>
 	</div>
 	<div class="col-12 d-flex justify-content-md-end" style="gap: 10px">
-			<a asp-action="Index" class="btn btn-dark w-25">Back</a>
-			<button type="submit" class="btn btn-success w-25" style="background-color: rgb(0,47,52); color: white">Create</button>
+		<a asp-action="Index" class="btn btn-dark w-25">Back</a>
+		<button type="submit" class="btn btn-success w-25" style="background-color: rgb(0,47,52); color: white">Create</button>
 	</div>
 </form>
 @section Scripts {
 	<partial name="_ValidationScriptsPartial.cshtml" />
-	<script src="~/js/Create.js"></script>
+	<partial name="~/Views/Advertisements/_AdsCreateScriptPartial.cshtml" />
 }

@@ -108,6 +108,7 @@ myForm.addEventListener('submit', function (event) {
       });
 });
 
+// Логіка вибору зображення
 // Спрацьовує лише якщо в середині елемент <i>
 $imageDiv.on('click', function (event) {
     let $element = $($(this).children().first());

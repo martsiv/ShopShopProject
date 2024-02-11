@@ -66,7 +66,7 @@ namespace Business_logic.Services
         {
 			var ads = context.Advertisements.Find(id);
 			if (ads == null) throw new Exception($"Advertisement with ID {id} not found.");
-
+			// TODO delete pictures also
 			context.Advertisements.Remove(ads);
 			context.SaveChanges();
 		}
