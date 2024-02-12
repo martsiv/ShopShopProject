@@ -1,4 +1,6 @@
-﻿@model AdvertisementDto
+﻿@using Business_logic.Interfaces;
+@model AdvertisementDto;
+@inject IFavoritesService favService;
 
 <div class="col">
 	<div class="card h-100">
@@ -24,7 +26,14 @@
             </p>
         </div>
         <div class="card-footer">
-            <a asp-controller="Favorite" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-primary">Add to Cart</a>
+            @if (favService.IsExists(Model.Id))
+            {
+                <a asp-controller="Favorite" asp-action="Remove" asp-route-id="@Model.Id" class="btn btn-secondary">Remove from favorites</a>
+            }
+            else
+            {
+                <a asp-controller="Favorite" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-primary">Add to favorites</a>
+            }
         </div>
 	</div>
 </div>

@@ -52,5 +52,13 @@ namespace ShopShopWebApp.Services
 			SaveItems(ids);
 		}
 
-	}
+        public bool IsExists(int id)
+        {
+            IEnumerable<int>? ids = GetItems();
+
+            if (ids == null) return false;
+
+            return ids.Contains(id);
+        }
+    }
 }
