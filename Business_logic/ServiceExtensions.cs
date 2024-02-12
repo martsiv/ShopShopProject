@@ -24,7 +24,7 @@ namespace Business_logic
 		public static void AddCustomServices(this IServiceCollection services)
 		{
 			services.AddScoped<IAdvertisementsService, AdvertisementsService>();
-			// others...
+
 		}
 	}
 }

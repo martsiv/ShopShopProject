@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Business_logic.DTOs
 {
-	public class AdvertisementStatusDTO
+	public class AdvertisementStatusDto
 	{
         public int Id { get; set; }
         public string Name { get; set; }

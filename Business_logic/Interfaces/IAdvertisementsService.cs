@@ -4,15 +4,15 @@ namespace Business_logic.Interfaces
 {
 	public interface IAdvertisementsService
 	{
-		Task<IEnumerable<AdvertisementDTO>> GetAllAds();
-		Task<IEnumerable<AdvertisementDTO>> GetAds(IEnumerable<int> ids);
-		Task<AdvertisementDTO?> GetAds(int id);
+		Task<IEnumerable<AdvertisementDto>> GetAllAds();
+		Task<IEnumerable<AdvertisementDto>> GetAds(IEnumerable<int> ids);
+		Task<AdvertisementDto?> GetAds(int id);
 		Task<int> GetCountAds();
-		Task<IEnumerable<CategoryDTO>> GetAllCategories();
-		Task CreateAds(CreateAdsDTO model);
-		Task EditAds(EditAdsDTO model);
+		Task<IEnumerable<CategoryDto>> GetAllCategories();
+		Task CreateAds(CreateAdsDto model);
+		Task EditAds(EditAdsDto model);
 		Task DeleteAds(int id);
-		Task<DeliveryDTO?> GetDelivery(int AdsID);
-		Task EditDelivery(DeliveryDTO model);
+		Task<DeliveryDto?> GetDelivery(int AdsID);
+		Task EditDelivery(DeliveryDto model);
 	}
 }

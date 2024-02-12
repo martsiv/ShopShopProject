@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Business_logic.DTOs
 {
-	public class DeliveryDTO
+	public class DeliveryDto
 	{
 		public int Id { get; set; }
 		public int DeliveryCompanyId { get; set; }

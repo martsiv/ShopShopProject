@@ -8,15 +8,16 @@ namespace Business_logic.Mapping
     {
         public AdvertisementProfile()
         {
-            CreateMap<Advertisement, AdvertisementDTO>();
-            CreateMap<Advertisement, EditAdsDTO>();
+            CreateMap<Advertisement, AdvertisementDto>();
+            CreateMap<Advertisement, EditAdsDto>();
 
-            CreateMap<AdvertisementDTO, EditAdsDTO>().ReverseMap();
+            CreateMap<AdvertisementDto, EditAdsDto>().ReverseMap();
 
-            CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<Category, CategoryDto>().ReverseMap();
 
-            CreateMap<DeliveryContactInfo, DeliveryDTO>();
-            CreateMap<AdvertisePicture, AdvertisePictureDTO>().ReverseMap();
+            CreateMap<DeliveryContactInfo, DeliveryDto>();
+            CreateMap<AdvertisePicture, AdvertisePictureDto>().ReverseMap();
+
 		}
 	}
 }

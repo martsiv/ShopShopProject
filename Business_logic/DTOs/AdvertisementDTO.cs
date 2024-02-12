@@ -1,6 +1,6 @@
 ﻿namespace Business_logic.DTOs
 {
-    public class AdvertisementDTO
+    public class AdvertisementDto
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -13,6 +13,6 @@
         public string? UserName { get; set; }
         public int AdvertisementStatusId { get; set; }
         public string? AdvertisementStatusName { get; set; }
-        public ICollection<AdvertisePictureDTO> AdvertisePictures { get; set; } = new HashSet<AdvertisePictureDTO>();
+        public ICollection<AdvertisePictureDto> AdvertisePictures { get; set; } = new HashSet<AdvertisePictureDto>();
     }
 }

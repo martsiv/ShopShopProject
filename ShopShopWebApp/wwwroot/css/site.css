@@ -58,7 +58,7 @@ input.valid {
     border: 1px solid #16a085;
 }
 
-#image-label {
+.image-label {
     position: relative;
     width: 150px;
     height: 150px;
@@ -79,6 +79,6 @@ input.valid {
     transition: all 1s;
 }
 
-    #image-label:hover {
+    .image-label:hover {
         color: #18ac1c;
     }

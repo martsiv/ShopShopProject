@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Business_logic.Validators
 {
-	internal class EditAdsModelValidator : AbstractValidator<EditAdsDTO>
+	internal class EditAdsModelValidator : AbstractValidator<EditAdsDto>
 	{
 		public EditAdsModelValidator()
 		{

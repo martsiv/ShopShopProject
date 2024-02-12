@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Business_logic.DTOs
 {
-    public class AdvertisePictureDTO
+    public class AdvertisePictureDto
     {
         public int Id { get; set; }
         public string URL { get; set; }

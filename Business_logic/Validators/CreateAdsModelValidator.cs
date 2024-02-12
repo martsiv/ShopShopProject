@@ -3,7 +3,7 @@ using Business_logic.DTOs;
 
 namespace Business_logic.Validators
 {
-    public class CreateAdsModelValidator : AbstractValidator<CreateAdsDTO>
+    public class CreateAdsModelValidator : AbstractValidator<CreateAdsDto>
 	{
 		public CreateAdsModelValidator()
 		{

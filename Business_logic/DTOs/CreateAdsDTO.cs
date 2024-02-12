@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Business_logic.DTOs
 {
-    public class CreateAdsDTO
+    public class CreateAdsDto
     {
         public int Id { get; set; }
         public string Title { get; set; }

@@ -19,7 +19,7 @@ namespace ShopShopWebApp.Controllers
         private async Task LoadCategories()
         {
 			var categoris = await adsService.GetAllCategories();
-			ViewBag.Categories = new SelectList(categoris, nameof(CategoryDTO.Id), nameof(CategoryDTO.Name));
+			ViewBag.Categories = new SelectList(categoris, nameof(CategoryDto.Id), nameof(CategoryDto.Name));
 		}
         public async Task<IActionResult> Index()
         {
@@ -34,7 +34,7 @@ namespace ShopShopWebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id, string? returnUrl)
         {
-            AdvertisementDTO? advertisement = await adsService.GetAds(id);
+            AdvertisementDto? advertisement = await adsService.GetAds(id);
             if (advertisement == null)
                 return NotFound();
 
@@ -49,7 +49,7 @@ namespace ShopShopWebApp.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateAdsDTO model)
+        public async Task<IActionResult> Create(CreateAdsDto model)
         {
             if (!ModelState.IsValid)
             {
@@ -66,10 +66,10 @@ namespace ShopShopWebApp.Controllers
             if (advertisement == null) return NotFound();
 
             await LoadCategories();
-            return View(mapper.Map<EditAdsDTO>(advertisement));
+            return View(mapper.Map<EditAdsDto>(advertisement));
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(EditAdsDTO model)
+        public async Task<IActionResult> Edit(EditAdsDto model)
         {
             if (!ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace ShopShopWebApp.Controllers
 			if (advertisement == null) return NotFound();
 
 			await LoadCategories();
-			return Ok(mapper.Map<EditAdsDTO>(advertisement));
+			return Ok(mapper.Map<EditAdsDto>(advertisement));
 		}
 
 	}

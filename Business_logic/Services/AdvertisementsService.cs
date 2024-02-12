@@ -16,7 +16,7 @@ namespace Business_logic.Services
             this.mapper = mapper;
             this.context = context;
         }
-        public async Task CreateAds(CreateAdsDTO model)
+        public async Task CreateAds(CreateAdsDto model)
         {
 			var title = model.Title;
 			var price = model.Price;
@@ -71,7 +71,7 @@ namespace Business_logic.Services
 			context.SaveChanges();
 		}
 
-        public async Task EditAds(EditAdsDTO model)
+        public async Task EditAds(EditAdsDto model)
         {
 			var ads = await context.Advertisements.FirstOrDefaultAsync(x => x.Id == model.Id);
 			if (ads == null) throw new Exception($"Advertisement with ID {model.Id} not found.");
@@ -149,27 +149,27 @@ namespace Business_logic.Services
 			context.Advertisements.Update(ads);
 			await context.SaveChangesAsync();
 		}
-		public async Task<DeliveryDTO> GetDeliveryByAds(int id)
+		public async Task<DeliveryDto> GetDeliveryByAds(int id)
 		{
 			var delivery = await context.DeliveryContactInfos.Include(x => x.DeliveryCompany)
 										.Include(x => x.DeliveryHomeAdrdess)
 										.FirstOrDefaultAsync(i => i.Id == id);
 			if (delivery == null) return null;
 
-			return mapper.Map<DeliveryDTO>(delivery);
+			return mapper.Map<DeliveryDto>(delivery);
 		}
-		public async Task CreateDelivery(DeliveryDTO model)
+		public async Task CreateDelivery(DeliveryDto model)
 		{
 			throw new NotImplementedException();
 		}
-		public async Task EditDelivery(DeliveryDTO model)
+		public async Task EditDelivery(DeliveryDto model)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<AdvertisementDTO>> GetAds(IEnumerable<int> ids)
+        public async Task<IEnumerable<AdvertisementDto>> GetAds(IEnumerable<int> ids)
         {
-			return mapper.Map<List<AdvertisementDTO>>(await context.Advertisements
+			return mapper.Map<List<AdvertisementDto>>(await context.Advertisements
 							.Include(x => x.Category)
                             .Include(x => x.AdvertisePictures)
                             .Include(x => x.User)
@@ -178,7 +178,7 @@ namespace Business_logic.Services
 							.ToListAsync());
 		}
 
-        public async Task<AdvertisementDTO?> GetAds(int id)
+        public async Task<AdvertisementDto?> GetAds(int id)
         {
            var ads = await context.Advertisements.Include(x => x.Category)
 							.Include(x => x.AdvertisePictures)
@@ -187,10 +187,10 @@ namespace Business_logic.Services
                             .FirstOrDefaultAsync(i => i.Id == id);
 			if (ads == null) return null;
 
-			return mapper.Map<AdvertisementDTO>(ads);
+			return mapper.Map<AdvertisementDto>(ads);
 		}
 
-        public async Task<IEnumerable<AdvertisementDTO>> GetAllAds()
+        public async Task<IEnumerable<AdvertisementDto>> GetAllAds()
         {
 			var adsList = await context.Advertisements
 							.Include(x => x.Category)
@@ -198,12 +198,12 @@ namespace Business_logic.Services
                             .Include(x => x.User)
                             .Include(x => x.AdvertisementStatus)
                             .ToListAsync();
-			return mapper.Map<List<AdvertisementDTO>>(adsList);
+			return mapper.Map<List<AdvertisementDto>>(adsList);
         }
 
-        public async Task<IEnumerable<CategoryDTO>> GetAllCategories()
+        public async Task<IEnumerable<CategoryDto>> GetAllCategories()
         {
-			return mapper.Map<List<CategoryDTO>>(await context.Categories.ToListAsync());
+			return mapper.Map<List<CategoryDto>>(await context.Categories.ToListAsync());
 		}
 
 		public async Task<int> GetCountAds()
@@ -211,7 +211,7 @@ namespace Business_logic.Services
 			return context.Advertisements.Count();
 		}
 
-		public async Task<DeliveryDTO?> GetDelivery(int AdsID)
+		public async Task<DeliveryDto?> GetDelivery(int AdsID)
         {
             var delivery = await context.DeliveryContactInfos
                 .Include(x => x.DeliveryCompany)
@@ -219,7 +219,7 @@ namespace Business_logic.Services
                 .FirstOrDefaultAsync(x => x.AdvertisementId == AdsID);
             if (delivery == null) return null;
 
-			return mapper.Map<DeliveryDTO>(delivery);
+			return mapper.Map<DeliveryDto>(delivery);
 		}
 	}
 }
