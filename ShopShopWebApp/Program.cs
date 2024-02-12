@@ -4,6 +4,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Business_logic;
 using Business_logic.Mapping;
+using ShopShopWebApp.Helpers;
 
 namespace ShopShopWebApp
 {
@@ -27,6 +28,16 @@ namespace ShopShopWebApp
 
 			// add custom servies
 			builder.Services.AddCustomServices();
+			builder.Services.AddCartService();
+
+			builder.Services.AddDistributedMemoryCache();
+
+			builder.Services.AddSession(options =>
+			{
+				options.IdleTimeout = TimeSpan.FromDays(30);
+				options.Cookie.HttpOnly = true;
+				options.Cookie.IsEssential = true;
+			});
 
 			var app = builder.Build();
 
@@ -45,7 +56,9 @@ namespace ShopShopWebApp
 
             app.UseAuthorization();
 
-            app.MapControllerRoute(
+			app.UseSession();
+
+			app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
