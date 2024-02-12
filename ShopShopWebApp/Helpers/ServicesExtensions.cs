@@ -5,7 +5,7 @@ namespace ShopShopWebApp.Helpers
 {
 	public static class ServiceExtensions
 	{
-		public static void AddCartService(this IServiceCollection services)
+		public static void AddFavoriteService(this IServiceCollection services)
 		{
 			services.AddScoped<IFavoritesService, FavoritesService>();
 		}

@@ -28,7 +28,7 @@ namespace ShopShopWebApp
 
 			// add custom servies
 			builder.Services.AddCustomServices();
-			builder.Services.AddCartService();
+			builder.Services.AddFavoriteService();
 
 			builder.Services.AddDistributedMemoryCache();
 
