@@ -16,7 +16,7 @@ namespace data_access.Entities
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
         public DeliveryContactInfo? DeliveryContactInfo { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public User? User { get; set; }
         public int AdvertisementStatusId { get; set; }
         public AdvertisementStatus? AdvertisementStatus { get; set; }

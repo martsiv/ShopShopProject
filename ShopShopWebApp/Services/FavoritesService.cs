@@ -1,6 +1,7 @@
 ﻿using Business_logic.DTOs;
 using Business_logic.Interfaces;
 using ShopShopWebApp.Helpers;
+using System.Text.Json;
 
 namespace ShopShopWebApp.Services
 {
@@ -15,9 +16,18 @@ namespace ShopShopWebApp.Services
 			this.httpContext = httpContextAccessor.HttpContext!;
 			this.advertisementsService = advertisementsService;
 		}
-		private void SaveItems(List<int> items) => httpContext.Session.Set(key, items);
-		private List<int>? GetItems() => httpContext.Session.Get<List<int>>(key);
-		public int GetCount()
+        private void SaveItems(List<int> items)
+        {
+			//httpContext.Session.SetString(key, JsonSerializer.Serialize(items));
+			httpContext.Session.Set(key, items);
+		}
+        private List<int>? GetItems()
+        {
+            //var value = httpContext.Session.GetString(key);
+            // return value == null ? default : JsonSerializer.Deserialize<List<int>>(value);
+            return httpContext.Session.Get<List<int>>(key);
+        }
+        public int GetCount()
 		{
 			return GetItems()?.Count ?? 0;
 		}

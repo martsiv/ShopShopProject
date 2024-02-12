@@ -18,48 +18,48 @@ namespace Business_logic.Services
         }
         public async Task CreateAds(CreateAdsDto model)
         {
-			var title = model.Title;
-			var price = model.Price;
-			var description = model.Description;
-			var city = model.City;
-			var categoryId = model.CategoryId;
+			//var title = model.Title;
+			//var price = model.Price;
+			//var description = model.Description;
+			//var city = model.City;
+			//var categoryId = model.CategoryId;
 
-			Advertisement ads = new()
-			{
-				UserId = 1,
-				AdvertisementStatusId = 2,
-				Title = title,
-				Price = price,
-				Description = description,
-				City = city,
-				CategoryId = categoryId,
-			};
-			await context.Advertisements.AddAsync(ads);
+			//Advertisement ads = new()
+			//{
+			//	UserId = 1,
+			//	AdvertisementStatusId = 2,
+			//	Title = title,
+			//	Price = price,
+			//	Description = description,
+			//	City = city,
+			//	CategoryId = categoryId,
+			//};
+			//await context.Advertisements.AddAsync(ads);
 
-			if (model.Pictures != null && model.Pictures.Count > 0)
-			{
-				foreach (var picture in model.Pictures.Select((value, i) => new { i, value }))
-				{
-					var fileName = Guid.NewGuid().ToString() + Path.GetExtension(picture.value.FileName);
+			//if (model.Pictures != null && model.Pictures.Count > 0)
+			//{
+			//	foreach (var picture in model.Pictures.Select((value, i) => new { i, value }))
+			//	{
+			//		var fileName = Guid.NewGuid().ToString() + Path.GetExtension(picture.value.FileName);
 
-					var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
-					//Check directory
-					var directoryPath = Path.GetDirectoryName(filePath);
-					if (!Directory.Exists(directoryPath))
-					{
-						Directory.CreateDirectory(directoryPath);
-					}
+			//		var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+			//		//Check directory
+			//		var directoryPath = Path.GetDirectoryName(filePath);
+			//		if (!Directory.Exists(directoryPath))
+			//		{
+			//			Directory.CreateDirectory(directoryPath);
+			//		}
 
-					using (var stream = new FileStream(filePath, FileMode.Create))
-					{
-						await picture.value.CopyToAsync(stream);
-					}
-					if (picture.i == 0) // if index == 0
-						await context.AdvertisePictures.AddAsync(new() { IsMainPicture = true, URL = $"/images/{fileName}", Advertisement = ads });
-					else await context.AdvertisePictures.AddAsync(new() { IsMainPicture = false, URL = $"/images/{fileName}", Advertisement = ads });
-				}
-			}
-			await context.SaveChangesAsync();
+			//		using (var stream = new FileStream(filePath, FileMode.Create))
+			//		{
+			//			await picture.value.CopyToAsync(stream);
+			//		}
+			//		if (picture.i == 0) // if index == 0
+			//			await context.AdvertisePictures.AddAsync(new() { IsMainPicture = true, URL = $"/images/{fileName}", Advertisement = ads });
+			//		else await context.AdvertisePictures.AddAsync(new() { IsMainPicture = false, URL = $"/images/{fileName}", Advertisement = ads });
+			//	}
+			//}
+			//await context.SaveChangesAsync();
 		}
 
         public async Task DeleteAds(int id)

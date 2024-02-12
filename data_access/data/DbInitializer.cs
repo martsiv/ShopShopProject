@@ -22,13 +22,6 @@ namespace data_access.data
 				new AdvertisementStatus() { Id = 4, Name = "Deleted" },
 				new AdvertisementStatus() { Id = 5, Name = "Archive" },
 			});
-			modelBuilder.Entity<User>().HasData(new User[]
-			{
-				new User() { Id = 1, FirstName = "John", LastName = "Doe", Phone = "0972463461", Email = "johndoe@gmail.com" },
-				new User() { Id = 2, FirstName = "Valter", LastName = "Scott", Phone = "0954285352", Email = "valterscott@gmail.com" },
-				new User() { Id = 3, FirstName = "Daniel", LastName = "Green", Phone = "0735520395", Email = "danielgreen@gmail.com" },
-				new User() { Id = 4, FirstName = "Abraham", LastName = "Eddison", Phone = "0994725481", Email = "abraham@gmail.com" },
-			});
 			modelBuilder.Entity<Category>().HasData(new Category[]
 			{
 				new Category() { Id = 1, Name = "Child wares" },
@@ -57,10 +50,6 @@ namespace data_access.data
 				new Category() { Id = 23, Name = "Repair of equipment", ParentCategoryId = 7},
 				new Category() { Id = 24, Name = "TV / Video", ParentCategoryId = 7},
 				new Category() { Id = 25, Name = "Laptops and accessories", ParentCategoryId = 7},
-			});
-			modelBuilder.Entity<Advertisement>().HasData(new Advertisement[]
-			{
-				new Advertisement() { Id = 1, Title = "iPhone 13 Pro Max 512Gb", Price = 67399, Description = "New phone with waranty", City = "Kyiv", CategoryId = 12, AdvertisementStatusId = 2, UserId = 1 },
 			});
 		}
     }

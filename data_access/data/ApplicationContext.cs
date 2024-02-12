@@ -1,17 +1,18 @@
 ﻿using data_access.Configurations;
 using data_access.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace data_access.data
 {
-    public class ApplicationContext : DbContext
+    public class ApplicationContext : IdentityDbContext<User>
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-			modelBuilder.ApplyConfiguration(new AdvertisementConfiguration());
-			modelBuilder.ApplyConfiguration(new UserConfiguration());
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new AdvertisementConfiguration());
 
 			DbInitializer.SeedData(modelBuilder);
         }

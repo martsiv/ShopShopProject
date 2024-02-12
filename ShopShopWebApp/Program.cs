@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Business_logic;
 using Business_logic.Mapping;
 using ShopShopWebApp.Helpers;
+using data_access.Entities;
+using Microsoft.AspNetCore.Identity;
+using Business_logic.Interfaces;
 
 namespace ShopShopWebApp
 {
@@ -21,6 +24,14 @@ namespace ShopShopWebApp
             builder.Services.AddDbContext<ApplicationContext>(opts =>
                 opts.UseSqlServer(connStr));
 
+            builder.Services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+            })
+                .AddDefaultTokenProviders()
+                .AddDefaultUI()
+                .AddEntityFrameworkStores<ApplicationContext>();
+
             // auto mapper
             builder.Services.AddAutoMapper();
             // Validators
@@ -28,9 +39,11 @@ namespace ShopShopWebApp
 
 			// add custom servies
 			builder.Services.AddCustomServices();
-			builder.Services.AddFavoriteService();
+            builder.Services.AddFavoriteService();
+            //builder.Services.AddScoped<IFavoritesService, IFavoritesService>();
 
-			builder.Services.AddDistributedMemoryCache();
+
+            builder.Services.AddDistributedMemoryCache();
 
 			builder.Services.AddSession(options =>
 			{
@@ -58,7 +71,9 @@ namespace ShopShopWebApp
 
 			app.UseSession();
 
-			app.MapControllerRoute(
+            app.MapRazorPages();
+
+            app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
