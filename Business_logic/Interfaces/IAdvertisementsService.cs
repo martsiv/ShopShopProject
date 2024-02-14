@@ -12,7 +12,5 @@ namespace Business_logic.Interfaces
 		Task CreateAds(CreateAdsDto model);
 		Task EditAds(EditAdsDto model);
 		Task DeleteAds(int id);
-		Task<DeliveryDto?> GetDelivery(int AdsID);
-		Task EditDelivery(DeliveryDto model);
 	}
 }

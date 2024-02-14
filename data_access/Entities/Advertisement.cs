@@ -21,5 +21,6 @@ namespace data_access.Entities
         public int AdvertisementStatusId { get; set; }
         public AdvertisementStatus? AdvertisementStatus { get; set; }
         public ICollection<AdvertisePicture> AdvertisePictures { get; set; } = new HashSet<AdvertisePicture>();
+        public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
     }
 }

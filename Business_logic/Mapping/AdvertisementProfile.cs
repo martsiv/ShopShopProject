@@ -18,6 +18,8 @@ namespace Business_logic.Mapping
             CreateMap<DeliveryContactInfo, DeliveryDto>();
             CreateMap<AdvertisePicture, AdvertisePictureDto>().ReverseMap();
 
-		}
-	}
+            CreateMap<Order, OrderDto>().ReverseMap();
+
+        }
+    }
 }

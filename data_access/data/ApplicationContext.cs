@@ -24,5 +24,7 @@ namespace data_access.data
         public DbSet<DeliveryContactInfo> DeliveryContactInfos { get; set; } = null!;
         public DbSet<DeliveryHomeAdrdess> DeliveryHomeAdrdesses { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Order> Orders { get; set; } = null!;
+
     }
 }

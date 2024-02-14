@@ -9,5 +9,6 @@ namespace Business_logic.Interfaces
 		void Remove(int id);
 		int GetCount();
         bool IsExists(int id);
+        IEnumerable<int> GetAdsIds();
     }
 }

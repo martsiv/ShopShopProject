@@ -28,11 +28,11 @@
         <div class="card-footer">
             @if (favService.IsExists(Model.Id))
             {
-                <a asp-controller="Favorite" asp-action="Remove" asp-route-id="@Model.Id" class="btn btn-secondary">Remove from favorites</a>
+                <a asp-controller="Favorite" asp-action="Remove" asp-route-id="@Model.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-secondary">Remove from favorites</a>
             }
             else
             {
-                <a asp-controller="Favorite" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-primary">Add to favorites</a>
+                <a asp-controller="Favorite" asp-action="Add" asp-route-id="@Model.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-primary">Add to favorites</a>
             }
         </div>
 	</div>

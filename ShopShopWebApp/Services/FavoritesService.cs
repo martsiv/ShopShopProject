@@ -23,10 +23,10 @@ namespace ShopShopWebApp.Services
 		}
         private List<int>? GetItems()
         {
-            //var value = httpContext.Session.GetString(key);
-            // return value == null ? default : JsonSerializer.Deserialize<List<int>>(value);
-            return httpContext.Session.Get<List<int>>(key);
-        }
+			//var value = httpContext.Session.GetString(key);
+			//return value == null ? default : JsonSerializer.Deserialize<List<int>>(value);
+			return httpContext.Session.Get<List<int>>(key);
+		}
         public int GetCount()
 		{
 			return GetItems()?.Count ?? 0;
@@ -69,6 +69,10 @@ namespace ShopShopWebApp.Services
             if (ids == null) return false;
 
             return ids.Contains(id);
+        }
+        public IEnumerable<int> GetAdsIds()
+        {
+            return GetItems() ?? Enumerable.Empty<int>();
         }
     }
 }

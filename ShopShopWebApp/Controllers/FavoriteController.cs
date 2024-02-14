@@ -11,20 +11,21 @@ namespace ShopShopWebApp.Controllers
         {
             this._favoritesService = favoritesService;
         }
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(string returnUrl)
 		{
+			ViewBag.ReturnUrl = returnUrl;
 			return View(_favoritesService.GetAdvertisements());
 		}
-		public IActionResult Add(int id)
+		public IActionResult Add(int id, string returnUrl)
 		{
 			_favoritesService.Add(id);
-			return RedirectToAction(nameof(Index));
+			return Redirect(returnUrl);
 		}
 
-		public IActionResult Remove(int id)
+		public IActionResult Remove(int id, string returnUrl)
 		{
 			_favoritesService.Remove(id);
-			return RedirectToAction(nameof(Index));
+			return Redirect(returnUrl);
 		}
 	}
 }

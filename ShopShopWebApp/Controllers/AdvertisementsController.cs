@@ -10,11 +10,12 @@ namespace ShopShopWebApp.Controllers
     {
 		private readonly IAdvertisementsService adsService;
         private readonly IMapper mapper;
-
-        public AdvertisementsController(IAdvertisementsService adsService, IMapper mapper)
+        private readonly ILogger<AdvertisementsController> _logger;
+        public AdvertisementsController(IAdvertisementsService adsService, IMapper mapper, ILogger<AdvertisementsController> logger)
         {
             this.adsService = adsService;
             this.mapper = mapper;
+            this._logger = logger;
         }
         private async Task LoadCategories()
         {
@@ -74,6 +75,7 @@ namespace ShopShopWebApp.Controllers
             if (!ModelState.IsValid)
             {
                 await LoadCategories();
+                _logger.LogInformation("Logger in work");
                 return View(model);
             }
 

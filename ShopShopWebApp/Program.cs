@@ -8,6 +8,7 @@ using ShopShopWebApp.Helpers;
 using data_access.Entities;
 using Microsoft.AspNetCore.Identity;
 using Business_logic.Interfaces;
+using ShopShopWebApp.Services;
 
 namespace ShopShopWebApp
 {
@@ -24,6 +25,7 @@ namespace ShopShopWebApp
             builder.Services.AddDbContext<ApplicationContext>(opts =>
                 opts.UseSqlServer(connStr));
 
+
             builder.Services.AddIdentity<User, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -37,10 +39,10 @@ namespace ShopShopWebApp
             // Validators
 			builder.Services.AddFluentValidator();
 
-			// add custom servies
-			builder.Services.AddCustomServices();
+            // add custom servies
+            builder.Services.AddCustomServices();
             builder.Services.AddFavoriteService();
-            //builder.Services.AddScoped<IFavoritesService, IFavoritesService>();
+            //builder.Services.AddScoped<IFavoritesService, FavoritesService>();
 
 
             builder.Services.AddDistributedMemoryCache();

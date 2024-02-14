@@ -51,6 +51,16 @@ namespace data_access.data
 				new Category() { Id = 24, Name = "TV / Video", ParentCategoryId = 7},
 				new Category() { Id = 25, Name = "Laptops and accessories", ParentCategoryId = 7},
 			});
-		}
+            modelBuilder.Entity<OrderStatus>().HasData(new OrderStatus[]
+            {
+                new OrderStatus() { Id = 1, Name = "New" },
+                new OrderStatus() { Id = 2, Name = "Processing" },
+                new OrderStatus() { Id = 3, Name = "Shipped" },
+                new OrderStatus() { Id = 4, Name = "Delivered" },
+                new OrderStatus() { Id = 5, Name = "Pending Payment" },
+                new OrderStatus() { Id = 6, Name = "Canceled" },
+                new OrderStatus() { Id = 7, Name = "Refused" },
+            });
+        }
     }
 }

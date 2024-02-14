@@ -1,5 +1,9 @@
 ﻿@using Business_logic.Interfaces
+@using data_access.Entities
+@using Microsoft.AspNetCore.Identity
 @inject IFavoritesService favoriteService;
+@inject SignInManager<User> SignInManager;
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,6 +36,9 @@
                         </li>
                         <li class="nav-item align-self-center">
                             <a type="button" class="btn btn-light btn-lg h-100 m-0" asp-area="" asp-controller="Advertisements" asp-action="Create">Create new</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Orders" asp-action="Index">Orders</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav">

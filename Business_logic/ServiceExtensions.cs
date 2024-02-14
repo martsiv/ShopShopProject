@@ -4,7 +4,6 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 
-
 namespace Business_logic
 {
 	public static class ServiceExtensions
@@ -24,7 +23,8 @@ namespace Business_logic
 		public static void AddCustomServices(this IServiceCollection services)
 		{
 			services.AddScoped<IAdvertisementsService, AdvertisementsService>();
+            services.AddScoped<IOrdersService, OrdersService>();
 
-		}
-	}
+        }
+    }
 }

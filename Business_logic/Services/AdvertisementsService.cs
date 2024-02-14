@@ -3,63 +3,81 @@ using Business_logic.DTOs;
 using Business_logic.Interfaces;
 using data_access.data;
 using data_access.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Business_logic.Services
 {
     public class AdvertisementsService : IAdvertisementsService
     {
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper mapper;
         private readonly ApplicationContext context;
-        public AdvertisementsService(IMapper mapper, ApplicationContext context)
+        public AdvertisementsService(IMapper mapper, ApplicationContext context, SignInManager<User> signInManager, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
         {
             this.mapper = mapper;
             this.context = context;
+			this._signInManager = signInManager;
+			this._userManager = userManager;
+			this._httpContextAccessor = httpContextAccessor;
         }
         public async Task CreateAds(CreateAdsDto model)
         {
-			//var title = model.Title;
-			//var price = model.Price;
-			//var description = model.Description;
-			//var city = model.City;
-			//var categoryId = model.CategoryId;
+			var title = model.Title;
+			var price = model.Price;
+			var description = model.Description;
+			var city = model.City;
+			var categoryId = model.CategoryId;
+            var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-			//Advertisement ads = new()
-			//{
-			//	UserId = 1,
-			//	AdvertisementStatusId = 2,
-			//	Title = title,
-			//	Price = price,
-			//	Description = description,
-			//	City = city,
-			//	CategoryId = categoryId,
-			//};
-			//await context.Advertisements.AddAsync(ads);
+			// Перевіряємо, чи userId не порожній та чи користувач існує в базі даних
+			if (userId != null)
+			{
+				var user = await _userManager.FindByIdAsync(userId);
+				if (user == null) return;
+			}
+			else return;
 
-			//if (model.Pictures != null && model.Pictures.Count > 0)
-			//{
-			//	foreach (var picture in model.Pictures.Select((value, i) => new { i, value }))
-			//	{
-			//		var fileName = Guid.NewGuid().ToString() + Path.GetExtension(picture.value.FileName);
+            Advertisement ads = new()
+			{
+				UserId = userId,
+				AdvertisementStatusId = 2,
+				Title = title,
+				Price = price,
+				Description = description,
+				City = city,
+				CategoryId = categoryId,
+			};
+			await context.Advertisements.AddAsync(ads);
 
-			//		var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
-			//		//Check directory
-			//		var directoryPath = Path.GetDirectoryName(filePath);
-			//		if (!Directory.Exists(directoryPath))
-			//		{
-			//			Directory.CreateDirectory(directoryPath);
-			//		}
+			if (model.Pictures != null && model.Pictures.Count > 0)
+			{
+				foreach (var picture in model.Pictures.Select((value, i) => new { i, value }))
+				{
+					var fileName = Guid.NewGuid().ToString() + Path.GetExtension(picture.value.FileName);
 
-			//		using (var stream = new FileStream(filePath, FileMode.Create))
-			//		{
-			//			await picture.value.CopyToAsync(stream);
-			//		}
-			//		if (picture.i == 0) // if index == 0
-			//			await context.AdvertisePictures.AddAsync(new() { IsMainPicture = true, URL = $"/images/{fileName}", Advertisement = ads });
-			//		else await context.AdvertisePictures.AddAsync(new() { IsMainPicture = false, URL = $"/images/{fileName}", Advertisement = ads });
-			//	}
-			//}
-			//await context.SaveChangesAsync();
+					var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+					//Check directory
+					var directoryPath = Path.GetDirectoryName(filePath);
+					if (!Directory.Exists(directoryPath))
+					{
+						Directory.CreateDirectory(directoryPath);
+					}
+
+					using (var stream = new FileStream(filePath, FileMode.Create))
+					{
+						await picture.value.CopyToAsync(stream);
+					}
+					if (picture.i == 0) // if index == 0
+						await context.AdvertisePictures.AddAsync(new() { IsMainPicture = true, URL = $"/images/{fileName}", Advertisement = ads });
+					else await context.AdvertisePictures.AddAsync(new() { IsMainPicture = false, URL = $"/images/{fileName}", Advertisement = ads });
+				}
+			}
+			await context.SaveChangesAsync();
 		}
 
         public async Task DeleteAds(int id)
@@ -158,14 +176,6 @@ namespace Business_logic.Services
 
 			return mapper.Map<DeliveryDto>(delivery);
 		}
-		public async Task CreateDelivery(DeliveryDto model)
-		{
-			throw new NotImplementedException();
-		}
-		public async Task EditDelivery(DeliveryDto model)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<IEnumerable<AdvertisementDto>> GetAds(IEnumerable<int> ids)
         {
@@ -209,17 +219,6 @@ namespace Business_logic.Services
 		public async Task<int> GetCountAds()
         {
 			return context.Advertisements.Count();
-		}
-
-		public async Task<DeliveryDto?> GetDelivery(int AdsID)
-        {
-            var delivery = await context.DeliveryContactInfos
-                .Include(x => x.DeliveryCompany)
-                .Include(x => x.DeliveryHomeAdrdess)
-                .FirstOrDefaultAsync(x => x.AdvertisementId == AdsID);
-            if (delivery == null) return null;
-
-			return mapper.Map<DeliveryDto>(delivery);
 		}
 	}
 }

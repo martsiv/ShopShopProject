@@ -13,10 +13,9 @@ namespace data_access.Entities
         public DeliveryCompany? DeliveryCompany { get; set; }
         public int? DeliveryHomeAddressId { get; set; }
         public DeliveryHomeAdrdess? DeliveryHomeAdrdess { get; set; }
+        public Order? Order { get; set; }
         public string City { get; set; }
-        public string PostOffice { get; set; }
-        public DateTime CheckoutDate { get; set; }
-        public int AdvertisementId { get; set; }
-        public Advertisement? Advertisement { get; set; }
+        public string? PostOffice { get; set; }
+
     }
 }
